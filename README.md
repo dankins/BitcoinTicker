@@ -1,4 +1,12 @@
 BitcoinTicker
 =============
-
-BitcoinTicker
+This is a project for Harvard Extension School csci-e185 Big Data Analytics<br/>
+Youtube video available <a href="http://www.youtube.com/watch?v=TEMZIx5xCi4#!">here</a>
+<h4>Introduction</h4>
+Bitcoin is a decentralized currency that has been growing more popular every day. Unlike dollars or euros, there is no central government that controls it. However, like dollars or euros they can be traded like any other currency. Because it is so speculative and has a relatively small market cap its value can change very rapidly. This project uses Storm to connect to two major Bitcoin exchanges and send emails if the price changes more than X amount in Y minutes. 
+<h4>What is Storm?</h4>
+Storm is a very exciting project that makes it dead simple to process real time data in a distributed, scalable way. It was originally developed at Twitter to perform the “trending” function. Creator Nathan Marz stated that Storm is "doing for realtime processing what Hadoop did for batch processing". Storm is great at running continuously running functions against incoming data. It can be used as an ETL engine, distributed RPC, or realtime Map/Reduce-like functions. Storm is not meant to replace Hadoop, but rather fill the data availability gap between when an event occurs to after your batch process completes its analysis of that data. 
+<h4>What does this project do?</h4>
+The project uses the public API of two major Bitcoin exchanges (Bitstamp and MtGox) to determine if there has been a major price shift in a given period of time. Every 10 seconds it calculates the minimum, maximum, average, and volatility for the Bid (buy), Ask (sell), and Last price for each exchange over a 60 minute window. If the spread (maximum - minimum) is over $5 (and you have not recently been alerted) then it will send you an email. At its essence, this project essentially maintains aggregate statistics over any arbitrary values you wish to track. Similar to how “twitter trending” maintains a map of “Key -> count per interval”; this will maintain a map of “Key -> min/max/avg/count/volatility per interval”.
+<h4>Where do we go from here?</h4>
+While this use case works just fine for Storm, it may be overkill since there really isn’t that much data being generated. Storm is made to handle thousands of events per second. To fully utilize Storm’s potential perhaps we could connect to a NYSE web service and perform the same analysis against thousands of securities. Currently we are not persisting any of the interval statistics. If this project was developed further I would persist the data to Hadoop for offline analysis and develop machine learning algorithms to create dynamic alerts for any metric to determine “abnormal” changes in price.
